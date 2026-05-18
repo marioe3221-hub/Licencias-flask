@@ -1,9 +1,9 @@
+import os
 from flask import Flask, request, jsonify
 from datetime import datetime
 
 app = Flask(__name__)
 
-# Licencias
 licencias = {
     "ABC123": {
         "expira": "2026-06-30",
@@ -13,25 +13,16 @@ licencias = {
 
 @app.route('/validar', methods=['GET'])
 def validar():
-
     licencia = request.args.get('licencia')
 
     if licencia not in licencias:
-        return jsonify({
-            "status": "invalid"
-        })
+        return jsonify({"status": "invalid"})
 
     datos = licencias[licencia]
-
-    fecha_expira = datetime.strptime(
-        datos["expira"],
-        "%Y-%m-%d"
-    )
+    fecha_expira = datetime.strptime(datos["expira"], "%Y-%m-%d")
 
     if datetime.now() > fecha_expira:
-        return jsonify({
-            "status": "expired"
-        })
+        return jsonify({"status": "expired"})
 
     return jsonify({
         "status": "active",
@@ -39,4 +30,5 @@ def validar():
     })
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
