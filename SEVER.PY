@@ -19,10 +19,16 @@ def validar():
         return jsonify({"status": "invalid"})
 
     datos = licencias[licencia]
-    fecha_expira = datetime.strptime(datos["expira"], "%Y-%m-%d")
+
+    fecha_expira = datetime.strptime(
+        datos["expira"],
+        "%Y-%m-%d"
+    )
 
     if datetime.now() > fecha_expira:
-        return jsonify({"status": "expired"})
+        return jsonify({
+            "status": "expired"
+        })
 
     return jsonify({
         "status": "active",
