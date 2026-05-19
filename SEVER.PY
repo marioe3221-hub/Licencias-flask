@@ -29,7 +29,10 @@ def validar():
         return jsonify({
             "status": "expired"
         })
-
+if datos["estado"] != "active":
+    return jsonify({
+        "status": "inactive"
+    })
     return jsonify({
         "status": "active",
         "expires": datos["expira"]
