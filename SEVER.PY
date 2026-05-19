@@ -7,7 +7,7 @@ app = Flask(__name__)
 licencias = {
     "ABC123": {
         "expira": "2026-06-30",
-        "estado": "active"
+        "estado": "inactive"
     }
 }
 
