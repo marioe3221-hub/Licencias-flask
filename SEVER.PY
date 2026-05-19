@@ -8,7 +8,7 @@ licencias = {
 
     "ABC123": {
         "expira": "2026-06-30",
-        "estado": "inactive"
+        "estado": "active"
     }
 
 }
