@@ -5,18 +5,23 @@ from datetime import datetime
 app = Flask(__name__)
 
 licencias = {
+
     "ABC123": {
         "expira": "2026-06-30",
         "estado": "inactive"
     }
+
 }
 
 @app.route('/validar', methods=['GET'])
 def validar():
+
     licencia = request.args.get('licencia')
 
     if licencia not in licencias:
-        return jsonify({"status": "invalid"})
+        return jsonify({
+            "status": "invalid"
+        })
 
     datos = licencias[licencia]
 
@@ -29,10 +34,12 @@ def validar():
         return jsonify({
             "status": "expired"
         })
-if datos["estado"] != "active":
-    return jsonify({
-        "status": "inactive"
-    })
+
+    if datos["estado"] != "active":
+        return jsonify({
+            "status": "inactive"
+        })
+
     return jsonify({
         "status": "active",
         "expires": datos["expira"]
@@ -40,4 +47,4 @@ if datos["estado"] != "active":
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host='0.0.0.0', port=port)
